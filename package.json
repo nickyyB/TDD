@@ -1,0 +1,22 @@
+{
+  "name": "tdd",
+  "version": "1.0.0",
+  "description": "Basic Test Driven Development Examples",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nickyyB/TDD.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nickyyB/TDD/issues"
+  },
+  "homepage": "https://github.com/nickyyB/TDD#readme",
+  "devDependencies": {
+    "jest": "^29.1.2"
+  }
+}
