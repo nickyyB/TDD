@@ -29,7 +29,7 @@ describe('Test calculator functions', ()=>{
     expect(()=>{calculator.subCalculator(NaN, 3)}).toThrow(calculator.CalculatorError);
   });
 
-  test("Expression as param SUB CALC", () => {
+  test("Infinity as param SUB CALC", () => {
     expect(()=>{calculator.subCalculator(Infinity, 3)}).toThrow(calculator.CalculatorError);
   });
 
@@ -93,7 +93,95 @@ describe('Test calculator functions', ()=>{
     expect(()=>{calculator.addCalculator(1)}).toThrow(calculator.CalculatorError);
   });
 
-  test("Analyze array [1,2,3,4,5,6,7,8,9,10]", ()=>{
-    expect(calculator.analyzeArray(1,2,3,4,5,6,7,8,9,10)).toEqual(JSON.stringify({elements:10, avgValue:5.50, max:10, min:1}))
+  test("Analyze array [true,2,3,4,5,6,7,8,9,10]", ()=>{
+    expect(calculator.analyzeArray(true,2,3,4,5,6,7,8,9,10)).toEqual(JSON.stringify({elements:10, avgValue:5.50, max:10, min:1}))
   });
+
+  test("Fetch data from API and add it to array", async ()=>{
+    var array = [1, 2, 3];
+    const fetchData = jest.fn();
+    fetchData.mockReturnValue(
+      {
+        "country":[
+          {
+            "country_id":"GH",
+            "probability":0.224
+          },
+          {
+            "country_id":"PH",
+            "probability":0.084
+          },
+          {
+            "country_id":"NG",
+            "probability":0.073
+          },
+          {
+            "country_id":"US",
+            "probability":0.061
+          },
+          {
+            "country_id":"NE",
+            "probability":0.034
+          }],
+          "name":"nathaniel"
+        });
+    
+        // fetchData().country.forEach(element => {
+        //   console.log(element)
+        // });
+        //console.log(typeof(fetchData().country));
+    
+        //console.log(typeof(array));
+    expect(calculator.addElementToArray(array, fetchData().country)).toEqual(expect.arrayContaining(fetchData().country))
+        //expect(calculator.addElementToArray(array, fetchData().country)).objectContaining(fetchData().country);
+  });
+
+  test("Fetch data from API and Remove from Array", async ()=>{
+    var array = [1,2,3];
+    const fetchData = jest.fn();
+    fetchData.mockReturnValue(
+      {
+        "country":[
+          {
+            "country_id":"GH",
+            "probability":0.224
+          },
+          {
+            "country_id":"PH",
+            "probability":0.084
+          },
+          {
+            "country_id":"NG",
+            "probability":0.073
+          },
+          {
+            "country_id":"US",
+            "probability":0.061
+          },
+          {
+            "country_id":"NE",
+            "probability":0.034
+          }],
+          "name":"nathaniel"
+        });
+    calculator.addElementToArray(array, fetchData().country);
+    //expect(calculator.removeElementFromArray(array, fetchData().country)).not.toContainEqual(fetchData().country);
+    expect(calculator.removeElementFromArray(array, fetchData().country)).toEqual(expect.not.arrayContaining(fetchData().country))
+  });
+
+
+  test("Machine for buying snacks", ()=>{
+    let totalPrice = 202;
+    let paidAmmount = 400;
+    expect(calculator.getChangeVendingMachine(totalPrice, paidAmmount)).toEqual([100, 50, 20, 20, 5, 2, 1]);
+  });
+
+
+
+  test("Machine for buying snacks", ()=>{
+    let totalPrice = 202;
+    let paidAmmount = 400;
+    expect(calculator.getChangeVendingMachine(totalPrice, paidAmmount)).toEqual([100, 50, 20, 20, 5, 2, 1]);
+  });
+
 });
